@@ -53,8 +53,8 @@ OSStatus hotKeyHandler(EventHandlerCallRef nextHandler, EventRef anEvent, void *
         hotKeyID.signature = (OSType)[[NSString stringWithFormat:@"app%u", i] UTF8String];
         hotKeyID.id = i;
         
-        RegisterEventHotKey(keyCodes[i], cmdKey, hotKeyID, GetApplicationEventTarget(), 0, &hotKeyRef);
-        
+        RegisterEventHotKey(keyCodes[i], optionKey, hotKeyID, GetApplicationEventTarget(), 0, &hotKeyRef);
+        NSLog(@"keycode %d", keyCodes[i]);
         if (hotKeyRef != nil) {
             NSData *data = [NSData dataWithBytes:hotKeyRef length:sizeof(EventHotKeyRef)];
             [array addObject:data];
@@ -87,9 +87,8 @@ OSStatus hotKeyHandler(EventHandlerCallRef nextHandler, EventRef anEvent, void *
     NSArray *appsArray = [[AZResourceManager sharedInstance] readSelectedAppsList];
     if (appsArray.count < 10 || [appsArray[hotKeyRef.id] isEqual:[NSNull null]]) return noErr;
     
-    
     AZAppModel *app = [NSKeyedUnarchiver unarchiveObjectWithData:appsArray[hotKeyRef.id]];
-    NSLog(@"%@", app);
+    
     NSString *pathUrl = nil;
     if (app.isSysApp) {
         pathUrl = [NSString stringWithFormat:@"/System/Library/CoreServices/%@", app.appName];

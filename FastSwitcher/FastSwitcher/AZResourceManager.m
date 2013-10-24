@@ -13,13 +13,9 @@ id AZRez;
 
 @implementation AZResourceManager
 
-+ (void)initialize {
-    // system app path
-    sysIconBundle = @"/System/Library/CoreServices/CoreTypes.bundle";
-}
-
 + (id)sharedInstance {
     if (!AZRez) {
+        sysIconBundle = @"/System/Library/CoreServices/CoreTypes.bundle";
         AZRez = [[[self class] allocWithZone:nil] init];
     }
     return AZRez;

@@ -14,7 +14,6 @@
     NSString *resourceOverrideFolder;
 }
 
-+ (void)initialize;
 + (id)sharedInstance;
 + (NSImage *)imageNamed:(NSString *)name;
 + (NSImage *)imageNamed:(NSString *)name inBundle:(NSBundle *)bundle;

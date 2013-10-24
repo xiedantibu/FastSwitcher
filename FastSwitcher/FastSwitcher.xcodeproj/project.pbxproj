@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1803B28E1817E08600837DB6 /* NSView+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1803B28D1817E08600837DB6 /* NSView+Addition.m */; };
+		1803B28F1817E40100837DB6 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 185F552F1816B00300DF3930 /* AppKit.framework */; };
 		18583D141816BF7200937AB4 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18583D131816BF7200937AB4 /* ApplicationServices.framework */; };
 		18583D161816BF7800937AB4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18583D151816BF7800937AB4 /* CoreGraphics.framework */; };
 		185F552D1816B00300DF3930 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 185F552C1816B00300DF3930 /* Cocoa.framework */; };
@@ -25,11 +27,16 @@
 		185F55681816B14000DF3930 /* AZAppsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F55671816B14000DF3930 /* AZAppsManager.m */; };
 		185F556B1816B20800DF3930 /* AZResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F556A1816B20800DF3930 /* AZResourceManager.m */; };
 		185F556F1816B35100DF3930 /* AZPreferenceWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F556D1816B35100DF3930 /* AZPreferenceWindowController.m */; };
-		185F55701816B35100DF3930 /* AZPreferenceWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 185F556E1816B35100DF3930 /* AZPreferenceWindowController.xib */; };
 		185F55731816B64500DF3930 /* AZHotKeyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F55721816B64500DF3930 /* AZHotKeyManager.m */; };
 		185F55761816B6D200DF3930 /* AZAppIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F55751816B6D200DF3930 /* AZAppIconView.m */; };
 		185F55791816B82D00DF3930 /* AZAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185F55781816B82D00DF3930 /* AZAppController.m */; };
 		185F557B1816BA3200DF3930 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 185F557A1816BA3200DF3930 /* Carbon.framework */; };
+		18D12C6A1818C93A00A42E8F /* AZAppsSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D12C691818C93A00A42E8F /* AZAppsSelectionView.m */; };
+		18D12C6E1818CD6200A42E8F /* AZPrefsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D12C6C1818CD6200A42E8F /* AZPrefsWindowController.m */; };
+		18D12C711818CDBA00A42E8F /* AZPreferenceWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D12C701818CDBA00A42E8F /* AZPreferenceWindowController.xib */; };
+		18D12C741818CEC500A42E8F /* AZConfigView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D12C731818CEC500A42E8F /* AZConfigView.m */; };
+		18D12C7B1818D7F000A42E8F /* AZAboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D12C7A1818D7F000A42E8F /* AZAboutView.m */; };
+		C520BE7525464B13A178AC7B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D4618EB89CD4F2DAF3B6783 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +50,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D4618EB89CD4F2DAF3B6783 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1803B28C1817E08600837DB6 /* NSView+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Addition.h"; sourceTree = "<group>"; };
+		1803B28D1817E08600837DB6 /* NSView+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Addition.m"; sourceTree = "<group>"; };
 		18583D131816BF7200937AB4 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		18583D151816BF7800937AB4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		185F55291816B00300DF3930 /* FastSwitcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastSwitcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -74,7 +84,6 @@
 		185F556A1816B20800DF3930 /* AZResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AZResourceManager.m; sourceTree = "<group>"; };
 		185F556C1816B35100DF3930 /* AZPreferenceWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AZPreferenceWindowController.h; sourceTree = "<group>"; };
 		185F556D1816B35100DF3930 /* AZPreferenceWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AZPreferenceWindowController.m; sourceTree = "<group>"; };
-		185F556E1816B35100DF3930 /* AZPreferenceWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AZPreferenceWindowController.xib; sourceTree = "<group>"; };
 		185F55711816B64500DF3930 /* AZHotKeyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AZHotKeyManager.h; sourceTree = "<group>"; };
 		185F55721816B64500DF3930 /* AZHotKeyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AZHotKeyManager.m; sourceTree = "<group>"; };
 		185F55741816B6D200DF3930 /* AZAppIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AZAppIconView.h; sourceTree = "<group>"; };
@@ -82,6 +91,16 @@
 		185F55771816B82D00DF3930 /* AZAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AZAppController.h; sourceTree = "<group>"; };
 		185F55781816B82D00DF3930 /* AZAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AZAppController.m; sourceTree = "<group>"; };
 		185F557A1816BA3200DF3930 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		18D12C681818C93A00A42E8F /* AZAppsSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AZAppsSelectionView.h; sourceTree = "<group>"; };
+		18D12C691818C93A00A42E8F /* AZAppsSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AZAppsSelectionView.m; sourceTree = "<group>"; };
+		18D12C6B1818CD6200A42E8F /* AZPrefsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AZPrefsWindowController.h; sourceTree = "<group>"; };
+		18D12C6C1818CD6200A42E8F /* AZPrefsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AZPrefsWindowController.m; sourceTree = "<group>"; };
+		18D12C701818CDBA00A42E8F /* AZPreferenceWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AZPreferenceWindowController.xib; sourceTree = "<group>"; };
+		18D12C721818CEC500A42E8F /* AZConfigView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AZConfigView.h; sourceTree = "<group>"; };
+		18D12C731818CEC500A42E8F /* AZConfigView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AZConfigView.m; sourceTree = "<group>"; };
+		18D12C791818D7F000A42E8F /* AZAboutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AZAboutView.h; sourceTree = "<group>"; };
+		18D12C7A1818D7F000A42E8F /* AZAboutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AZAboutView.m; sourceTree = "<group>"; };
+		C5054F0851B04CD6A412E6C2 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,10 +108,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1803B28F1817E40100837DB6 /* AppKit.framework in Frameworks */,
 				18583D161816BF7800937AB4 /* CoreGraphics.framework in Frameworks */,
 				18583D141816BF7200937AB4 /* ApplicationServices.framework in Frameworks */,
 				185F557B1816BA3200DF3930 /* Carbon.framework in Frameworks */,
 				185F552D1816B00300DF3930 /* Cocoa.framework in Frameworks */,
+				C520BE7525464B13A178AC7B /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +136,7 @@
 				185F55501816B00300DF3930 /* FastSwitcherTests */,
 				185F552B1816B00300DF3930 /* Frameworks */,
 				185F552A1816B00300DF3930 /* Products */,
+				C5054F0851B04CD6A412E6C2 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -136,6 +158,7 @@
 				185F552C1816B00300DF3930 /* Cocoa.framework */,
 				185F554B1816B00300DF3930 /* XCTest.framework */,
 				185F552E1816B00300DF3930 /* Other Frameworks */,
+				0D4618EB89CD4F2DAF3B6783 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -155,24 +178,12 @@
 			children = (
 				185F553E1816B00300DF3930 /* AZAppDelegate.h */,
 				185F553F1816B00300DF3930 /* AZAppDelegate.m */,
-				185F55411816B00300DF3930 /* MainMenu.xib */,
 				185F55771816B82D00DF3930 /* AZAppController.h */,
 				185F55781816B82D00DF3930 /* AZAppController.m */,
-				185F55631816B0DF00DF3930 /* AZAppModel.h */,
-				185F55641816B0DF00DF3930 /* AZAppModel.m */,
-				185F55661816B14000DF3930 /* AZAppsManager.h */,
-				185F55671816B14000DF3930 /* AZAppsManager.m */,
-				185F55691816B20800DF3930 /* AZResourceManager.h */,
-				185F556A1816B20800DF3930 /* AZResourceManager.m */,
-				185F55711816B64500DF3930 /* AZHotKeyManager.h */,
-				185F55721816B64500DF3930 /* AZHotKeyManager.m */,
-				185F55741816B6D200DF3930 /* AZAppIconView.h */,
-				185F55751816B6D200DF3930 /* AZAppIconView.m */,
-				185F55601816B09100DF3930 /* AZAppsSwitchWindow.h */,
-				185F55611816B09100DF3930 /* AZAppsSwitchWindow.m */,
-				185F556C1816B35100DF3930 /* AZPreferenceWindowController.h */,
-				185F556D1816B35100DF3930 /* AZPreferenceWindowController.m */,
-				185F556E1816B35100DF3930 /* AZPreferenceWindowController.xib */,
+				18D12C781818D0E700A42E8F /* Swither */,
+				18D12C761818D07D00A42E8F /* Preference */,
+				18D12C751818D06C00A42E8F /* xib */,
+				18D12C771818D09100A42E8F /* Helper */,
 				185F55441816B00300DF3930 /* Images.xcassets */,
 				185F55331816B00300DF3930 /* Supporting Files */,
 			);
@@ -209,6 +220,60 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		18D12C751818D06C00A42E8F /* xib */ = {
+			isa = PBXGroup;
+			children = (
+				185F55411816B00300DF3930 /* MainMenu.xib */,
+				18D12C701818CDBA00A42E8F /* AZPreferenceWindowController.xib */,
+			);
+			name = xib;
+			sourceTree = "<group>";
+		};
+		18D12C761818D07D00A42E8F /* Preference */ = {
+			isa = PBXGroup;
+			children = (
+				18D12C681818C93A00A42E8F /* AZAppsSelectionView.h */,
+				18D12C691818C93A00A42E8F /* AZAppsSelectionView.m */,
+				18D12C721818CEC500A42E8F /* AZConfigView.h */,
+				18D12C731818CEC500A42E8F /* AZConfigView.m */,
+				18D12C791818D7F000A42E8F /* AZAboutView.h */,
+				18D12C7A1818D7F000A42E8F /* AZAboutView.m */,
+				18D12C6B1818CD6200A42E8F /* AZPrefsWindowController.h */,
+				18D12C6C1818CD6200A42E8F /* AZPrefsWindowController.m */,
+				185F556C1816B35100DF3930 /* AZPreferenceWindowController.h */,
+				185F556D1816B35100DF3930 /* AZPreferenceWindowController.m */,
+			);
+			name = Preference;
+			sourceTree = "<group>";
+		};
+		18D12C771818D09100A42E8F /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				1803B28C1817E08600837DB6 /* NSView+Addition.h */,
+				1803B28D1817E08600837DB6 /* NSView+Addition.m */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		18D12C781818D0E700A42E8F /* Swither */ = {
+			isa = PBXGroup;
+			children = (
+				185F55631816B0DF00DF3930 /* AZAppModel.h */,
+				185F55641816B0DF00DF3930 /* AZAppModel.m */,
+				185F55661816B14000DF3930 /* AZAppsManager.h */,
+				185F55671816B14000DF3930 /* AZAppsManager.m */,
+				185F55691816B20800DF3930 /* AZResourceManager.h */,
+				185F556A1816B20800DF3930 /* AZResourceManager.m */,
+				185F55711816B64500DF3930 /* AZHotKeyManager.h */,
+				185F55721816B64500DF3930 /* AZHotKeyManager.m */,
+				185F55741816B6D200DF3930 /* AZAppIconView.h */,
+				185F55751816B6D200DF3930 /* AZAppIconView.m */,
+				185F55601816B09100DF3930 /* AZAppsSwitchWindow.h */,
+				185F55611816B09100DF3930 /* AZAppsSwitchWindow.m */,
+			);
+			name = Swither;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -216,9 +281,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 185F555A1816B00300DF3930 /* Build configuration list for PBXNativeTarget "FastSwitcher" */;
 			buildPhases = (
+				50CFFE7643F74D2A9BCF7D37 /* Check Pods Manifest.lock */,
 				185F55251816B00300DF3930 /* Sources */,
 				185F55261816B00300DF3930 /* Frameworks */,
 				185F55271816B00300DF3930 /* Resources */,
+				5CD0C1B6CEF2403A8091390B /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -289,7 +356,7 @@
 				185F55371816B00300DF3930 /* InfoPlist.strings in Resources */,
 				185F55451816B00300DF3930 /* Images.xcassets in Resources */,
 				185F553D1816B00300DF3930 /* Credits.rtf in Resources */,
-				185F55701816B35100DF3930 /* AZPreferenceWindowController.xib in Resources */,
+				18D12C711818CDBA00A42E8F /* AZPreferenceWindowController.xib in Resources */,
 				185F55431816B00300DF3930 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,12 +371,47 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		50CFFE7643F74D2A9BCF7D37 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5CD0C1B6CEF2403A8091390B /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		185F55251816B00300DF3930 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				185F55761816B6D200DF3930 /* AZAppIconView.m in Sources */,
+				18D12C7B1818D7F000A42E8F /* AZAboutView.m in Sources */,
+				18D12C741818CEC500A42E8F /* AZConfigView.m in Sources */,
 				185F55681816B14000DF3930 /* AZAppsManager.m in Sources */,
 				185F55651816B0DF00DF3930 /* AZAppModel.m in Sources */,
 				185F55621816B09100DF3930 /* AZAppsSwitchWindow.m in Sources */,
@@ -317,6 +419,9 @@
 				185F55391816B00300DF3930 /* main.m in Sources */,
 				185F556B1816B20800DF3930 /* AZResourceManager.m in Sources */,
 				185F55731816B64500DF3930 /* AZHotKeyManager.m in Sources */,
+				18D12C6A1818C93A00A42E8F /* AZAppsSelectionView.m in Sources */,
+				18D12C6E1818CD6200A42E8F /* AZPrefsWindowController.m in Sources */,
+				1803B28E1817E08600837DB6 /* NSView+Addition.m in Sources */,
 				185F55791816B82D00DF3930 /* AZAppController.m in Sources */,
 				185F55401816B00300DF3930 /* AZAppDelegate.m in Sources */,
 			);
@@ -446,9 +551,15 @@
 		};
 		185F555B1816B00300DF3930 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5054F0851B04CD6A412E6C2 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/apple/Desktop/百度云同步盘/Code/FastSwitcher/FastSwitcher",
+					"/Users/apple/Desktop/百度云同步盘/Code/FastSwitcher/FastSwitcher/Vendor",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FastSwitcher/FastSwitcher-Prefix.pch";
 				INFOPLIST_FILE = "FastSwitcher/FastSwitcher-Info.plist";
@@ -459,9 +570,15 @@
 		};
 		185F555C1816B00300DF3930 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5054F0851B04CD6A412E6C2 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/apple/Desktop/百度云同步盘/Code/FastSwitcher/FastSwitcher",
+					"/Users/apple/Desktop/百度云同步盘/Code/FastSwitcher/FastSwitcher/Vendor",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FastSwitcher/FastSwitcher-Prefix.pch";
 				INFOPLIST_FILE = "FastSwitcher/FastSwitcher-Info.plist";

@@ -47,8 +47,9 @@
 
 - (void)listenEvents {
     [NSEvent addGlobalMonitorForEventsMatchingMask:NSFlagsChangedMask | NSPeriodicMask handler: ^(NSEvent *event) {
+        NSLog(@"global press");
         NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
-        if(flags == NSCommandKeyMask && !self.window.isFadingOut){
+        if(flags == NSAlternateKeyMask && !self.window.isFadingOut){
             isTapping = YES;
             if (self.window == nil) {
                 self.window  = [[AZAppsSwitchWindow alloc] init];
@@ -61,8 +62,9 @@
     }];
     
     [NSEvent addLocalMonitorForEventsMatchingMask:NSFlagsChangedMask | NSPeriodicMask handler:^(NSEvent *event) {
+        NSLog(@"local press");
         NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
-        if(flags == NSCommandKeyMask && !self.window.isFadingOut){
+        if(flags == NSAlternateKeyMask && !self.window.isFadingOut){
             isTapping = YES;
             if (self.window == nil) {
                 self.window  = [[AZAppsSwitchWindow alloc] init];

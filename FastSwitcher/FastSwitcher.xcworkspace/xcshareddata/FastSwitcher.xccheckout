@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>119ED3CD-2A7E-4803-BF60-5F7A3BF13DEA</string>
+	<key>IDESourceControlProjectName</key>
+	<string>FastSwitcher</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C196F61F-991A-4103-9513-6B71D2E38B01</key>
+		<string>ssh://github.com/gbammc/FastSwitcher.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>FastSwitcher/FastSwitcher.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C196F61F-991A-4103-9513-6B71D2E38B01</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/gbammc/FastSwitcher.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C196F61F-991A-4103-9513-6B71D2E38B01</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C196F61F-991A-4103-9513-6B71D2E38B01</string>
+			<key>IDESourceControlWCCName</key>
+			<string>FastSwitcher</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -10,7 +10,6 @@
 
 @interface AZAppIconView : NSImageView
 
-@property (nonatomic, strong) NSTextField *indexLabel;
 @property (nonatomic) NSUInteger index;
 
 - (id)initWithFrame:(NSRect)frameRect index:(NSUInteger)index;

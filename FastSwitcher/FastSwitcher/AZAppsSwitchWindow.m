@@ -52,7 +52,6 @@ CGFloat const iconOriginY = 20.0f;
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
-    
     NSBezierPath * path;
     path = [NSBezierPath bezierPathWithRoundedRect:dirtyRect xRadius:15 yRadius:15];
     [[NSColor colorWithCalibratedRed:0 green:0 blue:0 alpha:0.3] set];
