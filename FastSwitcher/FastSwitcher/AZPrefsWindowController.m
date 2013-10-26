@@ -14,20 +14,24 @@
 
 @implementation AZPrefsWindowController
 
-- (id)initWithWindow:(NSWindow *)window
-{
-    self = [super initWithWindow:window];
-    if (self) {
-        // Initialization code here.
+- (void)setupToolbar {
+    NSNib *nib = [[NSNib alloc] initWithNibNamed:[AZPrefsWindowController nibName] bundle:nil];
+    NSArray *topLevelObjects;
+    if (! [nib instantiateWithOwner:nil topLevelObjects:&topLevelObjects]) // error
+        NSLog(@"shit");
+    for (id topLevelObject in topLevelObjects) {
+        if ([topLevelObject isKindOfClass:[AZAppsSelectionView class]]) {
+            self.appsSelectionView = topLevelObject;
+        } else if ([topLevelObject isKindOfClass:[AZConfigView class]]) {
+            self.configView = topLevelObject;
+        } else if ([topLevelObject isKindOfClass:[AZAboutView class]]) {
+            self.aboutView = topLevelObject;
+        }
     }
-    return self;
-}
-
-- (void)windowDidLoad
-{
-    [super windowDidLoad];
     
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    [self addView:self.appsSelectionView label:@"General"];
+    [self addView:self.configView label:@"Advanced"];
+    [self addView:self.aboutView label:@"Updates"];
 }
 
 @end

@@ -8,11 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class AZPreferenceWindowController;
-
-@interface AZAppController : NSObject {
-    AZPreferenceWindowController *preferenceController;
-}
+@interface AZAppController : NSObject
 
 - (IBAction)showPreferencePanel:(id)sender;
 - (IBAction)showAboutPanel:(id)sender;

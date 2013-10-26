@@ -5,13 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="AZPrefsWindowController">
-            <connections>
-                <outlet property="aboutView" destination="TBI-Qb-0nD" id="cYU-hn-q5Y"/>
-                <outlet property="appsSelectionView" destination="umL-Du-TAL" id="uT2-CX-Crl"/>
-                <outlet property="configView" destination="5Wq-4B-1nW" id="5Xq-zq-CIa"/>
-            </connections>
-        </customObject>
+        <customObject id="-2" userLabel="File's Owner"/>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
         <view id="umL-Du-TAL" customClass="AZAppsSelectionView">
@@ -302,7 +296,7 @@
                 <outlet property="app9" destination="uVB-o7-avx" id="EV0-5m-ZM9"/>
             </connections>
         </view>
-        <customView id="5Wq-4B-1nW" customClass="AZConfigView">
+        <customView id="5Wq-4B-1nW">
             <rect key="frame" x="0.0" y="0.0" width="293" height="226"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
@@ -382,27 +376,15 @@
                     </buttonCell>
                 </button>
             </subviews>
-            <connections>
-                <outlet property="loginItemCheckBox" destination="TZ8-9R-mER" id="l8X-bW-OMa"/>
-            </connections>
         </customView>
-        <customView id="TBI-Qb-0nD" customClass="AZAboutView">
+        <customView id="0TK-fP-3Te">
             <rect key="frame" x="0.0" y="0.0" width="293" height="226"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hr1-YN-BtD">
-                    <rect key="frame" x="127" y="42" width="38" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="otf-KO-kTQ">
+                    <rect key="frame" x="127" y="50" width="38" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="v 1.0" id="BXw-fW-XOx">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ska-Hv-U1u">
-                    <rect key="frame" x="90" y="86" width="112" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Fast Switcher" id="bD1-zz-HBf">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="v 1.0" id="fIk-gn-0Qv">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -410,6 +392,5 @@
                 </textField>
             </subviews>
         </customView>
-        <userDefaultsController representsSharedInstance="YES" id="qqW-1X-lB0" userLabel="Shared Defaults"/>
     </objects>
 </document>

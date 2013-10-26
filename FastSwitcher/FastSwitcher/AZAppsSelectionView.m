@@ -24,6 +24,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
         self.appsList = [[AZAppsManager sharedInstance] getApps];
         
         // setup popupMenu    

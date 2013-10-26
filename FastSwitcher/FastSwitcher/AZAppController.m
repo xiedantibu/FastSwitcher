@@ -7,7 +7,7 @@
 //
 
 #import "AZAppController.h"
-#import "AZPreferenceWindowController.h"
+#import "AZPrefsWindowController.h"
 
 @implementation AZAppController
 
@@ -15,11 +15,8 @@
 }
 
 - (void)showPreferencePanel:(id)sender {
-    if (!preferenceController) {
-        preferenceController = [[AZPreferenceWindowController alloc] init];
-    }
     [NSApp activateIgnoringOtherApps:YES];
-    [preferenceController showWindow:self];
+    [[AZPrefsWindowController sharedPreferenceWindowController] showWindow:nil];
 }
 
 - (void)showAboutPanel:(id)sender {

@@ -11,7 +11,7 @@
 @interface AZPreferenceWindowController : NSWindowController
 
 + (AZPreferenceWindowController *)sharedPreferenceWindowController;
-+ (NSString *)xibName;
++ (NSString *)nibName;
 
 - (void)setupToolbar;
 - (void)addFlexibeSpacer;
