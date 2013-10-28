@@ -649,7 +649,7 @@
         </menu>
         <customObject id="494" customClass="AZAppDelegate">
             <connections>
-                <outlet property="statusMenu" destination="rsT-re-suj" id="I50-JX-3nE"/>
+                <outlet property="statusMenu" destination="rsT-re-suj" id="lPk-V5-uD1"/>
             </connections>
         </customObject>
         <customObject id="420" customClass="NSFontManager"/>

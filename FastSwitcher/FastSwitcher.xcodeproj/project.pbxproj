@@ -186,7 +186,7 @@
 				185F553F1816B00300DF3930 /* AZAppDelegate.m */,
 				185F55771816B82D00DF3930 /* AZAppController.h */,
 				185F55781816B82D00DF3930 /* AZAppController.m */,
-				18D12C781818D0E700A42E8F /* Swither */,
+				18D12C781818D0E700A42E8F /* Switcher */,
 				18D12C761818D07D00A42E8F /* Preference */,
 				18D12C751818D06C00A42E8F /* xib */,
 				18D12C771818D09100A42E8F /* Helper */,
@@ -264,7 +264,7 @@
 			name = Helper;
 			sourceTree = "<group>";
 		};
-		18D12C781818D0E700A42E8F /* Swither */ = {
+		18D12C781818D0E700A42E8F /* Switcher */ = {
 			isa = PBXGroup;
 			children = (
 				185F55631816B0DF00DF3930 /* AZAppModel.h */,
@@ -280,7 +280,7 @@
 				185F55601816B09100DF3930 /* AZAppsSwitchWindow.h */,
 				185F55611816B09100DF3930 /* AZAppsSwitchWindow.m */,
 			);
-			name = Swither;
+			name = Switcher;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

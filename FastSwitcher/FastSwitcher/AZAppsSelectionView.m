@@ -20,62 +20,56 @@
 
 @implementation AZAppsSelectionView
 
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
+- (void)awakeFromNib {
+    NSLog(@"awake");
+    self.appsList = [[AZAppsManager sharedInstance] getApps];
+    
+    // setup popupMenu    
+    NSMenu *menu = [[NSMenu alloc] init];
+    // empty object
+    NSMenuItem *emptyMenuItem = [[NSMenuItem alloc] init];
+    [emptyMenuItem setTitle:NSLocalizedString(@"空", nil)];
+    [menu addItem:emptyMenuItem];
+    // seperator
+    [menu addItem:[NSMenuItem separatorItem]];
+    
+    for (AZAppModel *app in self.appsList) {
+        NSMenuItem *menuItem = [[NSMenuItem alloc] init];
+        menuItem.title = app.appDisplayName;
+        NSImage *image = [AZResourceManager imageNamed:app.appIconPath inBundle:[NSBundle bundleWithURL:app.appBundleURL]];
+        [image setSize:NSMakeSize(16, 16)];
+        menuItem.image = image;
         
-        self.appsList = [[AZAppsManager sharedInstance] getApps];
-        
-        // setup popupMenu    
-        NSMenu *menu = [[NSMenu alloc] init];
-        
-        // empty object
-        NSMenuItem *emptyMenuItem = [[NSMenuItem alloc] init];
-        [emptyMenuItem setTitle:NSLocalizedString(@"空", nil)];
-        [menu addItem:emptyMenuItem];
-        // sep
-        [menu addItem:[NSMenuItem separatorItem]];
-        
-        for (AZAppModel *app in self.appsList) {
-            NSMenuItem *menuItem = [[NSMenuItem alloc] init];
-            menuItem.title = app.appDisplayName;
-            NSImage *image = [AZResourceManager imageNamed:app.appIconPath inBundle:[NSBundle bundleWithURL:app.appBundleURL]];
-            [image setSize:NSMakeSize(16, 16)];
-            menuItem.image = image;
+        [menu addItem:menuItem];
+    }
+    
+    for (int i = 1000; i < 1010; i++) {
+        NSPopUpButton *popUpBtn = [self viewWithTag:i];
+        [popUpBtn removeAllItems];
+        [popUpBtn setMenu:[menu copy]];
+    }
+    
+    // setup preference
+    NSArray *selectedApps = [[AZResourceManager sharedInstance] readSelectedAppsList];
+    AZAppModel *app = nil;
+    id data = nil;
+    for (NSInteger i = 0; i < selectedApps.count; i++) {
+        if (i == 0) {
+            data = [selectedApps lastObject];
+            if ([data isEqualTo:[NSNull null]]) continue;
+            app = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             
-            [menu addItem:menuItem];
-        }
-        
-        for (int i = 1000; i < 1010; i++) {
-            NSPopUpButton *popUpBtn = [self.window.initialFirstResponder viewWithTag:i];
-            [popUpBtn removeAllItems];
-            [popUpBtn setMenu:[menu copy]];
-        }
-        
-        // setup preference
-        NSArray *selectedApps = [[AZResourceManager sharedInstance] readSelectedAppsList];
-        AZAppModel *app = nil;
-        id data = nil;
-        for (NSInteger i = 0; i < selectedApps.count; i++) {
-            if (i == 0) {
-                data = [selectedApps lastObject];
-                if ([data isEqualTo:[NSNull null]]) continue;
-                app = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-                
-                NSPopUpButton *popUpBtn = [self.window.initialFirstResponder viewWithTag:1000];
-                [popUpBtn selectItemAtIndex:app.index + 2];
-            } else {
-                data = selectedApps[i - 1];
-                if ([data isEqualTo:[NSNull null]]) continue;
-                app = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-                
-                NSPopUpButton *popUpBtn = [self.window.initialFirstResponder viewWithTag:1000 + i];
-                [popUpBtn selectItemAtIndex:app.index + 2];
-            }
+            NSPopUpButton *popUpBtn = [self.window.initialFirstResponder viewWithTag:1000];
+            [popUpBtn selectItemAtIndex:app.index + 2];
+        } else {
+            data = selectedApps[i - 1];
+            if ([data isEqualTo:[NSNull null]]) continue;
+            app = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            
+            NSPopUpButton *popUpBtn = [self.window.initialFirstResponder viewWithTag:1000 + i];
+            [popUpBtn selectItemAtIndex:app.index + 2];
         }
     }
-    return self;
 }
 
 - (void)selectApp:(id)sender {

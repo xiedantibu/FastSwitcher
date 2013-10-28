@@ -11,8 +11,9 @@
 
 @interface AZConfigView : NSView
 
-@property (nonatomic, getter = isLoginItemEnable) BOOL  loginItemEnable;
-@property (nonatomic, weak) IBOutlet NSButton           *loginItemCheckBox;
 @property (nonatomic, weak) IBOutlet MASShortcutView    *shortcutView;
+
+- (IBAction)exit:(id)sender;
+
 
 @end

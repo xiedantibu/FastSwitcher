@@ -7,17 +7,13 @@
 //
 
 #import "AZPreferenceWindowController.h"
-#import "AZAppsManager.h"
-#import "AZAppModel.h"
-#import "AZResourceManager.h"
-#import "AZHotKeyManager.h"
 
 @interface AZPreferenceWindowController ()
 
 @property (nonatomic, strong) NSMutableArray *toolbarIdentifiers;
 @property (nonatomic, strong) NSMutableDictionary *toolbarViews;
 @property (nonatomic, strong) NSMutableDictionary *toolbarItems;
-@property (nonatomic, strong) NSView *contentSubView;
+@property (nonatomic, strong) NSView *contentSubview;
 
 @end
 
@@ -37,10 +33,8 @@
     return @"AZPreferenceWindowController";
 }
 
-- (id)initWithWindow:(NSWindow *)window
-{
-    self = [super initWithWindow:window];
-    if (self) {
+- (id)initWithWindow:(NSWindow *)window {
+    if ((self = [super initWithWindow:window])) {
         self.toolbarIdentifiers = [[NSMutableArray alloc] init];
         self.toolbarViews = [[NSMutableDictionary alloc] init];
         self.toolbarItems = [[NSMutableDictionary alloc] init];
@@ -50,11 +44,17 @@
 
 - (void)windowDidLoad
 {    
-    NSWindow *window = [[NSWindow alloc] initWithContentRect:NSMakeRect(100, 100, 1000, 1000) styleMask:(NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask) backing:NSBackingStoreBuffered defer:YES];
+    NSWindow *window = 
+    [[NSWindow alloc] initWithContentRect:NSMakeRect(0,0,1000,1000)
+                                styleMask:(NSTitledWindowMask |
+                                           NSClosableWindowMask |
+                                           NSMiniaturizableWindowMask)
+                                  backing:NSBackingStoreBuffered
+                                    defer:YES];
     [self setWindow:window];
-    self.contentSubView = [[NSView alloc] initWithFrame:[[[self window] contentView] frame]];
-    [self.contentSubView setAutoresizesSubviews:(NSViewMinYMargin | NSViewWidthSizable)];
-    [[[self window] contentView] addSubview:self.contentSubView];
+    self.contentSubview = [[NSView alloc] initWithFrame:[[[self window] contentView] frame]];
+    [self.contentSubview setAutoresizingMask:(NSViewMinYMargin | NSViewWidthSizable)];
+    [[[self window] contentView] addSubview:self.contentSubview];
     [[self window] setShowsToolbarButton:NO];
 }
 
@@ -113,7 +113,7 @@
         [[self window] setToolbar:toolbar];
     }
     
-    NSString *firstIdentifer =(self.toolbarIdentifiers)[0];
+    NSString *firstIdentifer = ([sender isKindOfClass:[NSString class]]) ? ((NSString *)sender) : ((self.toolbarIdentifiers)[0]);
     [[[self window] toolbar] setSelectedItemIdentifier:firstIdentifer];
     [self displayViewForIdentifier:firstIdentifer];
     [[self window] center];
@@ -135,8 +135,8 @@
     return self.toolbarIdentifiers;
 }
 
-- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag {
-    return (self.toolbarItems)[itemIdentifier];
+- (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)identifier willBeInsertedIntoToolbar:(BOOL)willBeInserted{
+	return (self.toolbarItems)[identifier];
 }
 
 - (void)toggleActivePreferenceView:(NSToolbarItem *)toolbarItem {
@@ -149,11 +149,11 @@
     
     // See if there are any visible views.
     NSView *oldView = nil;
-    if([[self.contentSubView subviews] count] > 0) {
+    if([[self.contentSubview subviews] count] > 0) {
         // Get a list of all of the views in the window. Usually at this
         // point there is just one visible view. But if the last fade
         // hasn't finished, we need to get rid of it now before we move on.
-        NSEnumerator *subviewsEnum = [[self.contentSubView subviews] reverseObjectEnumerator];
+        NSEnumerator *subviewsEnum = [[self.contentSubview subviews] reverseObjectEnumerator];
         
         // The first one (last one added) is our visible view.
         oldView = [subviewsEnum nextObject];
@@ -167,19 +167,21 @@
     
     if (![newView isEqualTo:oldView]) {
         NSRect frame = [newView bounds];
-        frame.origin.y = NSHeight([self.contentSubView frame]) - NSHeight([newView bounds]);
+        frame.origin.y = NSHeight([self.contentSubview frame]) - NSHeight([newView bounds]);
         [newView setFrame:frame];
-        [self.contentSubView addSubview:newView];
+        [self.contentSubview addSubview:newView];
         [[self window] setInitialFirstResponder:newView];
-        NSLog(@"%@ %@ %@ %@", NSStringFromRect(newView.frame), identifier, self.toolbarViews, newView.subviews);
-//        [oldView removeFromSuperviewWithoutNeedingDisplay];
-        [self.window.contentView addSubview:newView];
+        
+        [oldView removeFromSuperviewWithoutNeedingDisplay];
+        [newView setHidden:NO];
         [[self window] setFrame:[self frameForView:newView] display:YES animate:YES];
         [[self window] setTitle:[(self.toolbarItems)[identifier] label]];
     }
 }
 
-- (void)loadViewForIdentifier:(NSString *)identifier animate:(BOOL)animate {
+- (void)loadViewForIdentifier:(NSString *)identifier {
+    if (self.toolbarItems.count == 0) [self showWindow:identifier];
+    
     [[[self window] toolbar] setSelectedItemIdentifier:identifier];
     [self displayViewForIdentifier:identifier];
 }

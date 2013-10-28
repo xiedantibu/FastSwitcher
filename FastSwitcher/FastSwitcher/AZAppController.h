@@ -10,6 +10,8 @@
 
 @interface AZAppController : NSObject
 
+@property (nonatomic, weak) IBOutlet NSMenu *statusMenu;
+
 - (IBAction)showPreferencePanel:(id)sender;
 - (IBAction)showAboutPanel:(id)sender;
 - (IBAction)exit:(id)sender;

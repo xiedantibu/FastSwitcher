@@ -7,39 +7,57 @@
 //
 
 #import "AZConfigView.h"
+#import "AZAppDelegate.h"
+#import "AZHotKeyManager.h"
+#import "AZAppDelegate.h"
 
 @implementation AZConfigView
 
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-        [self.loginItemCheckBox bind:@"enabled" toObject:self withKeyPath:@"loginItemEnable" options:nil];
+- (void)awakeFromNib {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults addObserver:self
+               forKeyPath:@"modifyKey"
+                  options:NSKeyValueObservingOptionNew
+                  context:NULL];
+    [defaults addObserver:self
+               forKeyPath:@"loginItemEnable"
+                  options:NSKeyValueObservingOptionNew
+                  context:NULL];
+    [defaults addObserver:self
+               forKeyPath:@"shownInStatusBar"
+                  options:NSKeyValueObservingOptionNew
+                  context:NULL];
+    [defaults addObserver:self
+               forKeyPath:@"delayInterval"
+                  options:NSKeyValueObservingOptionNew
+                  context:NULL];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    if ([keyPath isEqualToString:@"modifyKey"]) {
+        [[AZHotKeyManager sharedInstance] registerHotKey];
+        [((AZAppDelegate *)[NSApplication sharedApplication].delegate) listenEvents];
+        
+    } else  if ([keyPath isEqualToString:@"loginItemEnable"]) {
+        BOOL loginItemEnable = [[change objectForKey:@"new"] boolValue];
+        if (loginItemEnable) {
+            [self addAppAsLoginItem];
+        } else {
+            [self removeAppFromLoginItem];
+        }
+        
+    } else if ([keyPath isEqualToString:@"shownInStatusBar"]) {
+        BOOL shown = [[change objectForKey:@"new"] boolValue];
+        NSString *notificationName = (shown) ? @"SHOW_STATUS_BAR" : @"HIDE_STATUS_BAR";
+        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil];
+        
+    } else if ([keyPath isEqualToString:@"delayInterval"]) {
+        [[AZHotKeyManager sharedInstance] registerHotKey];
+        [((AZAppDelegate *)[NSApplication sharedApplication].delegate) listenEvents];
     }
-    return self;
 }
 
 #pragma mark - login item
-
-- (BOOL)isLoginItemEnable{
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"LOGIN_ITEM_ENABLE"];
-}
-
-- (void)setLoginItemEnable:(BOOL)loginItemEnable {
-    if (self.loginItemEnable != loginItemEnable) {
-        [[NSUserDefaults standardUserDefaults] setBool:loginItemEnable forKey:@"LOGIN_ITEM_ENABLE"];
-        [self resetLoginItemRegistration];
-    }
-}
-
-- (void)resetLoginItemRegistration {
-    if (self.loginItemEnable) {
-        [self addAppAsLoginItem];
-    } else {
-        [self removeAppFromLoginItem];
-    }
-}
 
 - (void)addAppAsLoginItem {
 	NSString * appPath = [[NSBundle mainBundle] bundlePath];
@@ -97,4 +115,7 @@
 	}
 }
 
+- (IBAction)exit:(id)sender {
+    [NSApp terminate:self];
+}
 @end

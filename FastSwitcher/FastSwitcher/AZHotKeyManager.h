@@ -12,6 +12,7 @@
 
 + (id)sharedInstance;
 
+- (void)registerHotKey;
 - (void)registerHotKey:(NSArray *)apps;
 - (void)unregisterHotKey;
 

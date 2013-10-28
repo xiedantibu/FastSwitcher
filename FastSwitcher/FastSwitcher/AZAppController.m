@@ -12,6 +12,7 @@
 @implementation AZAppController
 
 - (void)awakeFromNib {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPreferencePanel:) name:@"SHOW_PREFERENCE_VIEW" object:nil];
 }
 
 - (void)showPreferencePanel:(id)sender {
@@ -20,7 +21,8 @@
 }
 
 - (void)showAboutPanel:(id)sender {
-    
+    [NSApp activateIgnoringOtherApps:YES];
+    [[AZPrefsWindowController sharedPreferenceWindowController] loadViewForIdentifier:@"Updates"];
 }
 
 - (void)exit:(id)sender {

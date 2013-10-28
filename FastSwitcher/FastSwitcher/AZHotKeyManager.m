@@ -38,6 +38,11 @@ OSStatus hotKeyHandler(EventHandlerCallRef nextHandler, EventRef anEvent, void *
     return AZReg;
 }
 
+- (void)registerHotKey {
+    NSArray *appsArray = [[AZResourceManager sharedInstance] readSelectedAppsList];
+    [self registerHotKey:appsArray];
+}
+
 - (void)registerHotKey:(NSArray *)apps {
     [self unregisterHotKey];
     
@@ -47,13 +52,34 @@ OSStatus hotKeyHandler(EventHandlerCallRef nextHandler, EventRef anEvent, void *
     
     NSMutableArray *array = [NSMutableArray array];
     int keyCodes[] = {18, 19, 20, 21, 23, 22, 26, 28, 25, 29};
+    
+    EventModifiers modifyKey = 0;
+    NSInteger   modifyKeyIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"modifyKey"];
+    switch (modifyKeyIndex) {
+        case 0:
+            modifyKey = cmdKey;
+            break;
+        case 1:
+            modifyKey = optionKey;
+            break;
+        case 2:
+            modifyKey = controlKey;
+            break;
+        case 3:
+            modifyKey = shiftKey;
+            break;
+        default:
+            modifyKey = cmdKey;
+            break;
+    }
+    
     for (unsigned int i = 0; i < 10; i++) {
         if ([apps[i] isEqualTo:[NSNull null]]) continue;
         
         hotKeyID.signature = (OSType)[[NSString stringWithFormat:@"app%u", i] UTF8String];
         hotKeyID.id = i;
         
-        RegisterEventHotKey(keyCodes[i], optionKey, hotKeyID, GetApplicationEventTarget(), 0, &hotKeyRef);
+        RegisterEventHotKey(keyCodes[i], modifyKey, hotKeyID, GetApplicationEventTarget(), 0, &hotKeyRef);
         NSLog(@"keycode %d", keyCodes[i]);
         if (hotKeyRef != nil) {
             NSData *data = [NSData dataWithBytes:hotKeyRef length:sizeof(EventHotKeyRef)];
@@ -81,7 +107,9 @@ OSStatus hotKeyHandler(EventHandlerCallRef nextHandler, EventRef anEvent, void *
 }
 
 OSStatus hotKeyHandler(EventHandlerCallRef nextHandler, EventRef anEvent, void *userData) {
+
     EventHotKeyID hotKeyRef;
+    
     GetEventParameter(anEvent, kEventParamDirectObject, typeEventHotKeyID, NULL, sizeof(hotKeyRef), NULL, &hotKeyRef);
     
     NSArray *appsArray = [[AZResourceManager sharedInstance] readSelectedAppsList];

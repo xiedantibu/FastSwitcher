@@ -48,7 +48,7 @@ static AZAppsManager *AZAm = nil;
                         }
                         app.appBundleURL = appBundle.bundleURL;
                         app.appName = name;
-                        app.appDisplayName = displayName;
+                        app.appDisplayName = name;
                         app.appIconPath = iconName;
                         app.isSysApp = NO;
                         app.index = index++;

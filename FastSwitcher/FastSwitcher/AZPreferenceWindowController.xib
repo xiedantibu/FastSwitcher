@@ -307,7 +307,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Ut-CP-6in">
-                    <rect key="frame" x="17" y="160" width="79" height="17"/>
+                    <rect key="frame" x="17" y="180" width="79" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="激活键：" id="4yl-Eb-BPR">
                         <font key="font" metaFont="system"/>
@@ -316,15 +316,18 @@
                     </textFieldCell>
                 </textField>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TZ8-9R-mER">
-                    <rect key="frame" x="96" y="120" width="179" height="18"/>
+                    <rect key="frame" x="96" y="140" width="179" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="登录时启动 FastSwitcher" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6VQ-Nn-stq">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <binding destination="qqW-1X-lB0" name="value" keyPath="values.loginItemEnable" id="daD-5W-SNV"/>
+                    </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UCq-Mg-YTs">
-                    <rect key="frame" x="17" y="121" width="76" height="17"/>
+                    <rect key="frame" x="17" y="141" width="76" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="开机启动：" id="hfD-9t-7mn">
                         <font key="font" metaFont="system"/>
@@ -333,15 +336,18 @@
                     </textFieldCell>
                 </textField>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sDc-zs-qJs">
-                    <rect key="frame" x="96" y="83" width="176" height="18"/>
+                    <rect key="frame" x="96" y="103" width="176" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" title="显示状态栏图标" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="WeW-ll-kl6">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <binding destination="qqW-1X-lB0" name="value" keyPath="values.shownInStatusBar" id="Sn9-ee-d9k"/>
+                    </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iZ8-X7-FFd">
-                    <rect key="frame" x="17" y="84" width="76" height="17"/>
+                    <rect key="frame" x="17" y="104" width="76" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="状态栏：" id="OCF-Xq-tYG">
                         <font key="font" metaFont="system"/>
@@ -349,8 +355,31 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MdR-Lc-M0T">
+                    <rect key="frame" x="96" y="69" width="176" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="显示提示窗口" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wry-BP-wrb">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <connections>
+                            <binding destination="qqW-1X-lB0" name="value" keyPath="values.shownSwitcherView" id="e7e-w9-UdQ"/>
+                        </connections>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="qqW-1X-lB0" name="value" keyPath="values.shownSwitcherView" id="Dv7-GO-2CB"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SBY-Ca-xf9">
+                    <rect key="frame" x="17" y="70" width="76" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="提示：" id="a7z-fG-IN1">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lLw-ub-KFa">
-                    <rect key="frame" x="17" y="46" width="76" height="17"/>
+                    <rect key="frame" x="14" y="33" width="76" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="关闭：" id="vY3-uk-B3q">
                         <font key="font" metaFont="system"/>
@@ -359,31 +388,46 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oJb-FD-1Sf">
-                    <rect key="frame" x="99" y="155" width="177" height="26"/>
+                    <rect key="frame" x="99" y="175" width="177" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="hUL-is-wLt" id="4Js-uT-W4K">
+                    <popUpButtonCell key="cell" type="push" title="⌘ Command 键" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="hUL-is-wLt" id="4Js-uT-W4K">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="58d-5v-q6p">
                             <items>
-                                <menuItem title="Item 1" state="on" id="hUL-is-wLt"/>
-                                <menuItem title="Item 2" id="JVY-f2-QSg"/>
-                                <menuItem title="Item 3" id="tpb-Jo-1F7"/>
+                                <menuItem title="⌘ Command 键" state="on" id="hUL-is-wLt"/>
+                                <menuItem title="⌥ Option 键" id="JVY-f2-QSg">
+                                    <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                </menuItem>
+                                <menuItem title="⌃ Control 键" id="tpb-Jo-1F7">
+                                    <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                                </menuItem>
+                                <menuItem title="⇧ Shift 键" id="iOG-6g-3Ul">
+                                    <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                                </menuItem>
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <binding destination="qqW-1X-lB0" name="selectedIndex" keyPath="values.modifyKey" id="GQD-Rw-dxF"/>
+                    </connections>
                 </popUpButton>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IzX-Tx-eMJ">
-                    <rect key="frame" x="92" y="37" width="187" height="32"/>
+                    <rect key="frame" x="89" y="24" width="187" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="退出 FastSwitcher" bezelStyle="rounded" alignment="left" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qYn-8K-gY1">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="exit:" target="5Wq-4B-1nW" id="QJg-rB-8Fd"/>
+                    </connections>
                 </button>
             </subviews>
             <connections>
                 <outlet property="loginItemCheckBox" destination="TZ8-9R-mER" id="l8X-bW-OMa"/>
+                <outlet property="shownInStatusBarCheckBox" destination="sDc-zs-qJs" id="GDb-Vt-B5U"/>
+                <outlet property="shownSwitcherViewCheckBox" destination="MdR-Lc-M0T" id="FAH-S9-Btr"/>
             </connections>
         </customView>
         <customView id="TBI-Qb-0nD" customClass="AZAboutView">

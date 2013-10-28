@@ -19,5 +19,6 @@
 - (void)addView:(NSView *)view label:(NSString *)label image:(NSImage *)image;
 
 - (void)toggleActivePreferenceView:(NSToolbarItem *)toolbarItem;
+- (void)loadViewForIdentifier:(NSString *)identifier;
 
 @end

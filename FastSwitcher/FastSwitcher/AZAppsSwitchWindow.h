@@ -12,9 +12,11 @@
     NSUInteger selectedAppsCount;
 }
 
+@property (nonatomic) BOOL isShown;
 @property (nonatomic) BOOL isFadingOut;
 @property (nonatomic, strong) NSArray *apps;
 
+- (void)refresh;
 - (void)fadeIn;
 - (void)fadeOut;
 

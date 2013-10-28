@@ -9,6 +9,7 @@
 #import "AZAppDelegate.h"
 #import "AZHotKeyManager.h"
 #import "AZResourceManager.h"
+#import "AZAppController.h"
 
 @implementation AZAppDelegate
 
@@ -45,33 +46,123 @@
 //    CFRelease(eventTap);
 //    CFRelease(runLoopSource);
 
+- (void)awakeFromNib {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"shownInStatusBar"]) {
+        [self showStatusBar];
+    }
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+    isFirstActive = YES;
+    
+    [self listenEvents];
+    
+    NSArray *appsArray = [[AZResourceManager sharedInstance] readSelectedAppsList];
+    [[AZHotKeyManager sharedInstance] registerHotKey:appsArray];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showStatusBar) name:@"SHOW_STATUS_BAR" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideStatusBar) name:@"HIDE_STATUS_BAR" object:nil];
+}
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"shownInStatusBar"] && !isFirstActive) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SHOW_PREFERENCE_VIEW" object:nil];
+    }
+    isFirstActive = NO;
+}
+
+- (void)showStatusBar {
+    statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    [statusItem setMenu:self.statusMenu];
+    [statusItem setTitle:@"FS"];
+    [statusItem setHighlightMode:YES];
+}
+
+- (void)hideStatusBar {
+    [[NSStatusBar systemStatusBar] removeStatusItem:statusItem];
+}
+
+#pragma mark - Handle events
+
 - (void)listenEvents {
-    [NSEvent addGlobalMonitorForEventsMatchingMask:NSFlagsChangedMask | NSPeriodicMask handler: ^(NSEvent *event) {
-        NSLog(@"global press");
+    // get modify key
+    NSInteger modifyKey = [self getModifyKey];
+    
+    // get delay interval
+    NSTimeInterval interval = [self getDelayInterval];
+    
+    // Clear previous monitors
+    if (self.globalMonitor != nil && self.localMonitor != nil) {
+        [NSEvent removeMonitor:self.globalMonitor];
+        [NSEvent removeMonitor:self.localMonitor];
+    }
+    
+    // Global monitor
+    self.globalMonitor = 
+    [NSEvent addGlobalMonitorForEventsMatchingMask:NSFlagsChangedMask | NSKeyDownMask handler: ^(NSEvent *event) {
+        BOOL shownSwitcherView = [[NSUserDefaults standardUserDefaults] boolForKey:@"shownSwitcherView"];
+        
         NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
-        if(flags == NSAlternateKeyMask && !self.window.isFadingOut){
+
+        if(shownSwitcherView && flags == modifyKey && !self.window.isFadingOut && !isTapping){
             isTapping = YES;
+            
+            // check hot key enable
+            if (hasTapped) {
+                hasTapped = NO;
+                self.enableHotKey = NO;
+                [self.timerDelay invalidate];
+                [self.timerDisabelHotKey invalidate];
+                return;
+            }
+            hasTapped = YES;
+            self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(cancelHoykeyDisable) userInfo:nil repeats:NO];
+
             if (self.window == nil) {
                 self.window  = [[AZAppsSwitchWindow alloc] init];
             }
-            [self.window fadeIn];
+            self.timerDelay = [NSTimer scheduledTimerWithTimeInterval:interval 
+                                                               target:self 
+                                                             selector:@selector(switcherViewFadeIn) 
+                                                             userInfo:nil 
+                                                              repeats:NO];
         } else {
+            if ([self.timerDelay isValid]) [self.timerDelay invalidate];
             if (isTapping) [self.window fadeOut];
             isTapping = NO;
         }
     }];
     
-    [NSEvent addLocalMonitorForEventsMatchingMask:NSFlagsChangedMask | NSPeriodicMask handler:^(NSEvent *event) {
-        NSLog(@"local press");
+    self.localMonitor = 
+    [NSEvent addLocalMonitorForEventsMatchingMask:NSFlagsChangedMask | NSKeyDownMask handler:^(NSEvent *event) {
+        BOOL shownSwitcherView = [[NSUserDefaults standardUserDefaults] boolForKey:@"shownSwitcherView"];
+        
         NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
-        if(flags == NSAlternateKeyMask && !self.window.isFadingOut){
+
+        if(shownSwitcherView && flags == modifyKey && !self.window.isFadingOut && !isTapping){
             isTapping = YES;
+            // check hot key enable
+            if (hasTapped) {
+                hasTapped = NO;
+                self.enableHotKey = NO;
+                [self.timerDelay invalidate];
+                [self.timerDisabelHotKey invalidate];
+                return event;
+            }
+            hasTapped = YES;
+            self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(cancelHoykeyDisable) userInfo:nil repeats:NO];
+            
             if (self.window == nil) {
                 self.window  = [[AZAppsSwitchWindow alloc] init];
             }
-
-            [self.window fadeIn];
-        } else  {
+            self.timerDelay = [NSTimer scheduledTimerWithTimeInterval:interval 
+                                                               target:self 
+                                                             selector:@selector(switcherViewFadeIn) 
+                                                             userInfo:nil 
+                                                              repeats:NO];
+        } else {
+            if ([self.timerDelay isValid]) [self.timerDelay invalidate];
             if (isTapping) [self.window fadeOut];
             isTapping = NO;
         }
@@ -79,19 +170,47 @@
     }];
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-    [self listenEvents];
-    
-    NSArray *appsArray = [[AZResourceManager sharedInstance] readSelectedAppsList];
-    [[AZHotKeyManager sharedInstance] registerHotKey:appsArray];
+- (NSInteger)getModifyKey {
+    NSInteger modifyKeyIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"modifyKey"];
+    NSInteger modifyKey = 0;
+    switch (modifyKeyIndex) {
+        case 0:
+            modifyKey = NSCommandKeyMask;
+            break;
+        case 1:
+            modifyKey = NSAlternateKeyMask;
+            break;
+        case 2:
+            modifyKey = NSControlKeyMask;
+            break;
+        case 3:
+            modifyKey = NSShiftKeyMask;
+            break;
+        default:
+            modifyKey = NSCommandKeyMask;
+            break;
+    }
+    return modifyKey;
 }
 
-- (void)awakeFromNib {
-    statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    [statusItem setMenu:statusMenu];
-    [statusItem setTitle:@"FS"];
-    [statusItem setHighlightMode:YES];
+- (NSTimeInterval)getDelayInterval {
+    NSTimeInterval interval = [[NSUserDefaults standardUserDefaults] doubleForKey:@"delayInterval"];
+    return interval;
+}
+
+- (void)refreshWindow {
+    self.window = nil;
+    self.window = [[AZAppsSwitchWindow alloc] init];
+}
+
+- (void)switcherViewFadeIn {
+    if (isTapping) {
+        [self.window fadeIn];
+    }
+}
+
+- (void)cancelHoykeyDisable {
+    hasTapped = NO;
 }
 
 @end

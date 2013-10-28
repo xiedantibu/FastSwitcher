@@ -29,7 +29,7 @@ CGFloat const iconOriginY = 20.0f;
     self = [super initWithFrame:frameRect];
     if (self) {
         self.apps = apps_;
-
+        
         CGFloat originX = iconMargin;
         CGFloat iconSize = [self calculateIconWith:frameRect.size.width];
         
@@ -117,19 +117,23 @@ CGFloat const iconOriginY = 20.0f;
         [self setAlphaValue:alpha];
         [NSThread sleepForTimeInterval:0.02];
     }
+    self.isShown = YES;
 }
 
 - (void)fadeOut {
-    if (self.isFadingOut) return;
+    if (self.isFadingOut || !self.isShown) return;
+    
     self.isFadingOut = YES;
     CGFloat alpha = 1;
     [self setAlphaValue:alpha];
     [self makeKeyAndOrderFront:self];
+    
     for (int x = 0; x < 10; x++) {
         alpha -= 0.1;
         [self setAlphaValue:alpha];
         [NSThread sleepForTimeInterval:0.02];
     }
+    self.isShown = NO;
     self.isFadingOut = NO;
 }
 
