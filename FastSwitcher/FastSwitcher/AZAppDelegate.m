@@ -55,7 +55,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     isFirstActive = YES;
-    
+    self.enableHotKey = YES;
     [self listenEvents];
     
     NSArray *appsArray = [[AZResourceManager sharedInstance] readSelectedAppsList];
@@ -63,6 +63,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showStatusBar) name:@"SHOW_STATUS_BAR" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideStatusBar) name:@"HIDE_STATUS_BAR" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshWindow) name:@"REFRESH_WINDOW" object:nil];
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
@@ -114,10 +115,11 @@
                 self.enableHotKey = NO;
                 [self.timerDelay invalidate];
                 [self.timerDisabelHotKey invalidate];
+                [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(anewHotKeyEnable) userInfo:Nil repeats:NO];
                 return;
             }
             hasTapped = YES;
-            self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(cancelHoykeyDisable) userInfo:nil repeats:NO];
+            self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(checkHotKeyEnable) userInfo:nil repeats:NO];
 
             if (self.window == nil) {
                 self.window  = [[AZAppsSwitchWindow alloc] init];
@@ -148,10 +150,11 @@
                 self.enableHotKey = NO;
                 [self.timerDelay invalidate];
                 [self.timerDisabelHotKey invalidate];
+                [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(anewHotKeyEnable) userInfo:Nil repeats:NO];
                 return event;
             }
             hasTapped = YES;
-            self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(cancelHoykeyDisable) userInfo:nil repeats:NO];
+            self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(checkHotKeyEnable) userInfo:nil repeats:NO];
             
             if (self.window == nil) {
                 self.window  = [[AZAppsSwitchWindow alloc] init];
@@ -209,8 +212,12 @@
     }
 }
 
-- (void)cancelHoykeyDisable {
+- (void)checkHotKeyEnable {
     hasTapped = NO;
+}
+
+- (void)anewHotKeyEnable {
+    self.enableHotKey = YES;
 }
 
 @end

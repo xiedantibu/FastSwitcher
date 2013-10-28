@@ -22,6 +22,7 @@
 @property (nonatomic, assign) BOOL enableHotKey;
 @property (nonatomic, strong) NSTimer *timerDelay;
 @property (nonatomic, strong) NSTimer *timerDisabelHotKey;
+@property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, weak) IBOutlet NSMenu *statusMenu;
 @property (nonatomic, strong) AZAppsSwitchWindow *window;
 

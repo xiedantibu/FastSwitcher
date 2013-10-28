@@ -175,11 +175,22 @@ id AZRez;
     return image;
 }
 
+- (NSString *)documentPath {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *folder = @"~/Library/Application Support/FastSwitcher/";
+    folder = [folder stringByExpandingTildeInPath];
+    
+    if ([fileManager fileExistsAtPath: folder] == NO) {
+        [fileManager createDirectoryAtPath:folder withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return folder;
+}
+
 // 保存已选应用
 - (void)saveSelectedApps:(NSArray *)apps {
     NSData *data =[NSKeyedArchiver archivedDataWithRootObject:apps];
-    NSArray *writablePaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [writablePaths lastObject];
+    NSString *documentsPath = [self documentPath];
     NSString *fileInDocuments = [documentsPath stringByAppendingPathComponent:@"appsData"];
     BOOL success = [data writeToFile:fileInDocuments atomically:YES];
     if (!success) {
@@ -189,23 +200,20 @@ id AZRez;
 }
 // 读取已选应用
 - (NSArray *)readSelectedAppsList {
-    NSArray *writablePaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [writablePaths lastObject];
+    NSString *documentsPath = [self documentPath];
     NSString *fileInDocuments = [documentsPath stringByAppendingPathComponent:@"appsData"];
     return [NSKeyedUnarchiver unarchiveObjectWithData:[NSData dataWithContentsOfFile:fileInDocuments]];
 }
 // 缓存全部应用信息
 - (void)cacheAllApps:(NSArray *)apps {
     NSData *data =[NSKeyedArchiver archivedDataWithRootObject:apps];
-    NSArray *writablePaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [writablePaths lastObject];
+    NSString *documentsPath = [self documentPath];
     NSString *fileInDocuments = [documentsPath stringByAppendingPathComponent:@"CacheApps"];
     [data writeToFile:fileInDocuments atomically:YES];
 }
 // 读取全部应用信息
 - (NSArray *)readCachedApps {
-    NSArray *writablePaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath = [writablePaths lastObject];
+    NSString *documentsPath = [self documentPath];
     NSString *fileInDocuments = [documentsPath stringByAppendingPathComponent:@"CacheApps"];
     return [NSKeyedUnarchiver unarchiveObjectWithData:[NSData dataWithContentsOfFile:fileInDocuments]];
 }

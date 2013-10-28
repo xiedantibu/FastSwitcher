@@ -29,9 +29,15 @@ CGFloat const iconOriginY = 20.0f;
     self = [super initWithFrame:frameRect];
     if (self) {
         self.apps = apps_;
+        NSInteger appsCount = 0;
+        for (id obj in self.apps)
+            if (![obj isEqualTo:[NSNull null]]) appsCount++;
         
         CGFloat originX = iconMargin;
-        CGFloat iconSize = [self calculateIconWith:frameRect.size.width];
+        CGFloat iconSize = 100;
+        if (frameRect.size.width < (appsCount * (100 + iconMargin) + iconMargin)) {
+            iconSize = (frameRect.size.width - iconMargin * (appsCount + 1)) / appsCount;
+        }
         
         for (NSUInteger i = 0; i < self.apps.count; i++) {
             if ([self.apps[i] isEqualTo:[NSNull null]]) continue;
@@ -44,7 +50,9 @@ CGFloat const iconOriginY = 20.0f;
                 iconSize
             } index:i];
             originX += (iconSize + iconMargin);
+        
             appIcon.image = [AZResourceManager imageNamed:app.appIconPath inBundle:[NSBundle bundleWithURL:app.appBundleURL]];
+            [appIcon.image setSize:NSMakeSize(iconSize, iconSize)];
             [self addSubview:appIcon];
         }
     }
@@ -58,16 +66,26 @@ CGFloat const iconOriginY = 20.0f;
     [path fill];
 }
 
-- (CGFloat)calculateIconWith:(CGFloat)constrainWidth {
-    constrainWidth -= (iconMargin * 2);
-    return 100.0f;
-}
-
 @end
 
 #pragma mark - AZAppsSwitchWindow
 
 @implementation AZAppsSwitchWindow
+
+- (NSRect)calculateRect:(NSInteger)appsCount {
+    NSRect screenRect = [self getScreenResolution];
+    CGFloat iconSize = 100;
+    if (screenRect.size.width < (appsCount * (100 + iconMargin) + iconMargin)) {
+        iconSize = (screenRect.size.width - iconMargin * (appsCount + 1)) / appsCount;
+    }
+    NSRect rect = (NSRect){
+        (screenRect.size.width - appsCount * (iconSize + iconMargin) - iconMargin) / 2,
+        (screenRect.size.height - iconSize - iconOriginY * 2) / 2,
+        appsCount * (iconSize + iconMargin) + iconMargin,
+        iconSize + iconOriginY * 2,
+    };
+    return rect;
+}
 
 - (id)init {
     self.apps = [[AZResourceManager sharedInstance] readSelectedAppsList];
@@ -75,13 +93,8 @@ CGFloat const iconOriginY = 20.0f;
     for (id obj in self.apps)
         if (![obj isEqualTo:[NSNull null]]) selectedAppsCount++;
     
-    NSRect screenRect = [self getScreenResolution];
-    NSRect rect = (NSRect){
-        (screenRect.size.width - selectedAppsCount * (100 + iconMargin) - iconMargin) / 2,
-        (screenRect.size.height - 100 - iconOriginY * 2) / 2,
-        selectedAppsCount * (100 + iconMargin) + iconMargin,
-        100 + iconOriginY * 2,
-    };
+    NSRect rect = [self calculateRect:selectedAppsCount];
+    
     return [self initWithContentRect:rect styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
 }
 
@@ -101,6 +114,18 @@ CGFloat const iconOriginY = 20.0f;
         [self setContentView:contentView];
     }
 	return self;
+}
+
+- (void)refresh {
+    self.apps = [[AZResourceManager sharedInstance] readSelectedAppsList];
+    selectedAppsCount = 0;
+    for (id obj in self.apps)
+        if (![obj isEqualTo:[NSNull null]]) selectedAppsCount++;
+    
+    NSRect rect = [self calculateRect:selectedAppsCount];
+    [self setFrame:rect display:YES animate:YES];
+    AZAppsLaunchContentView *contentView = [[AZAppsLaunchContentView alloc] initWithFrame:rect apps:self.apps];
+    [self setContentView:contentView];
 }
 
 - (void)fadeIn {
@@ -154,7 +179,6 @@ CGFloat const iconOriginY = 20.0f;
     for (NSUInteger index = 0; index < screenCount; index++) {
         NSScreen *screen = [screenArray objectAtIndex: index];
         NSRect screenRect = [screen visibleFrame];
-        
         if (mainScreen == screen) return screenRect;
     }
     return mainScreen.frame;

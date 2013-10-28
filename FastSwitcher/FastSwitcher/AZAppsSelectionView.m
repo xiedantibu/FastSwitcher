@@ -21,9 +21,7 @@
 @implementation AZAppsSelectionView
 
 - (void)awakeFromNib {
-    NSLog(@"awake");
     self.appsList = [[AZAppsManager sharedInstance] getApps];
-    
     // setup popupMenu    
     NSMenu *menu = [[NSMenu alloc] init];
     // empty object
@@ -59,15 +57,35 @@
             if ([data isEqualTo:[NSNull null]]) continue;
             app = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             
-            NSPopUpButton *popUpBtn = [self.window.initialFirstResponder viewWithTag:1000];
-            [popUpBtn selectItemAtIndex:app.index + 2];
+            NSPopUpButton *popUpBtn = [self viewWithTag:1000];
+            if ([((AZAppModel *)self.appsList[app.index]).appBundleURL isEqualTo:app.appBundleURL]) {
+                [popUpBtn selectItemAtIndex:app.index + 2];
+            } else {
+                for (NSInteger i = 0; i < self.appsList.count; i++) {
+                    AZAppModel *temp = self.appsList[i];
+                    if ([temp.appBundleURL isEqualTo:app.appBundleURL]) {
+                        [popUpBtn selectItemAtIndex:i + 2];
+                        break;
+                    }
+                }
+            }
         } else {
             data = selectedApps[i - 1];
             if ([data isEqualTo:[NSNull null]]) continue;
             app = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             
-            NSPopUpButton *popUpBtn = [self.window.initialFirstResponder viewWithTag:1000 + i];
-            [popUpBtn selectItemAtIndex:app.index + 2];
+            NSPopUpButton *popUpBtn = [self viewWithTag:1000 + i];
+            if ([((AZAppModel *)self.appsList[app.index]).appBundleURL isEqualTo:app.appBundleURL]) {
+                [popUpBtn selectItemAtIndex:app.index + 2];
+            } else {
+                for (NSInteger i = 0; i < self.appsList.count; i++) {
+                    AZAppModel *temp = self.appsList[i];
+                    if ([temp.appBundleURL isEqualTo:app.appBundleURL]) {
+                        [popUpBtn selectItemAtIndex:i + 2];
+                        break;
+                    }
+                }
+            }
         }
     }
 }
@@ -96,6 +114,7 @@
     
     [[AZResourceManager sharedInstance] saveSelectedApps:appsArray];
     [[AZHotKeyManager sharedInstance] registerHotKey:appsArray];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESH_WINDOW" object:nil];
 }
 
 @end
