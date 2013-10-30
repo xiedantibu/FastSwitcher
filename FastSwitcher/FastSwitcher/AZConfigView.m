@@ -14,6 +14,7 @@
 @implementation AZConfigView
 
 - (void)awakeFromNib {
+    // observe prefs changed
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults addObserver:self
                forKeyPath:@"modifyKey"
@@ -34,7 +35,7 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    if ([keyPath isEqualToString:@"modifyKey"]) {
+    if ([keyPath isEqualToString:@"modifyKey"] || [keyPath isEqualToString:@"delayInterval"]) {
         [[AZHotKeyManager sharedInstance] registerHotKey];
         [((AZAppDelegate *)[NSApplication sharedApplication].delegate) listenEvents];
         
@@ -47,13 +48,17 @@
         }
         
     } else if ([keyPath isEqualToString:@"shownInStatusBar"]) {
-        BOOL shown = [[change objectForKey:@"new"] boolValue];
-        NSString *notificationName = (shown) ? @"SHOW_STATUS_BAR" : @"HIDE_STATUS_BAR";
-        [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil];
+        BOOL show = [[change objectForKey:@"new"] boolValue];
+        AZAppDelegate *delegate = ((AZAppDelegate *)[NSApplication sharedApplication]);
+        if (show) {
+            delegate.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+            [delegate.statusItem setMenu:delegate.statusMenu];
+            [delegate.statusItem setTitle:@"FS"];
+            [delegate.statusItem setHighlightMode:YES];
+        } else {
+            [[NSStatusBar systemStatusBar] removeStatusItem:delegate.statusItem];
+        }
         
-    } else if ([keyPath isEqualToString:@"delayInterval"]) {
-        [[AZHotKeyManager sharedInstance] registerHotKey];
-        [((AZAppDelegate *)[NSApplication sharedApplication].delegate) listenEvents];
     }
 }
 

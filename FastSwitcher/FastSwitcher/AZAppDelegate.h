@@ -10,8 +10,6 @@
 #import "AZAppsSwitchWindow.h"
 
 @interface AZAppDelegate : NSObject <NSApplicationDelegate> {
-    NSStatusItem *statusItem;
-    
     BOOL isFirstActive;
     BOOL isTapping;
     BOOL hasTapped;
@@ -22,7 +20,7 @@
 @property (nonatomic, assign) BOOL enableHotKey;
 @property (nonatomic, strong) NSTimer *timerDelay;
 @property (nonatomic, strong) NSTimer *timerDisabelHotKey;
-@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, strong) NSStatusItem *statusItem;
 @property (nonatomic, weak) IBOutlet NSMenu *statusMenu;
 @property (nonatomic, strong) AZAppsSwitchWindow *window;
 

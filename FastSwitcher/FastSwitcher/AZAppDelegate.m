@@ -53,8 +53,7 @@
     }
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     isFirstActive = YES;
     self.enableHotKey = YES;
     [self listenEvents];
@@ -110,7 +109,7 @@
         
         NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
 
-        if(shownSwitcherView && flags == modifyKey && !self.window.isFadingOut && !isTapping){
+        if(flags == modifyKey && !self.window.isFadingOut && !isTapping){
             isTapping = YES;
             
             // check hot key enable
@@ -126,6 +125,8 @@
             hasTapped = YES;
             self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:intervalCheckHotKeyEnable target:self selector:@selector(checkHotKeyEnable) userInfo:nil repeats:NO];
 
+            if (!shownSwitcherView) return;
+            
             if (self.window == nil) {
                 self.window  = [[AZAppsSwitchWindow alloc] init];
             }
@@ -147,7 +148,7 @@
         
         NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
 
-        if(shownSwitcherView && flags == modifyKey && !self.window.isFadingOut && !isTapping){
+        if(flags == modifyKey && !self.window.isFadingOut && !isTapping){
             isTapping = YES;
             // check hot key enable
             if (hasTapped) {
@@ -156,12 +157,14 @@
                 [self.timerDelay invalidate];
                 [[AZHotKeyManager sharedInstance] unregisterHotKey];
                 [self.timerDisabelHotKey invalidate];
-                self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:intervalCheckHotKeyEnable target:self selector:@selector(checkHotKeyEnable) userInfo:nil repeats:NO];
+                self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:intervalAnewHotKey target:self selector:@selector(anewHotKeyEnable) userInfo:nil repeats:NO];
                 
                 return event;
             }
             hasTapped = YES;
-            self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(checkHotKeyEnable) userInfo:nil repeats:NO];
+            self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:intervalCheckHotKeyEnable target:self selector:@selector(checkHotKeyEnable) userInfo:nil repeats:NO];
+            
+            if (!shownSwitcherView) return event;
             
             if (self.window == nil) {
                 self.window  = [[AZAppsSwitchWindow alloc] init];
