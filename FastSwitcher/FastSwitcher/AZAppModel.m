@@ -10,14 +10,8 @@
 
 @implementation AZAppModel
 
-- (NSString *)description {
-    return [NSString stringWithFormat:@"app %@, %@, %lu", self.appName, self.appDisplayName, self.index];
-}
-
-- (id) initWithCoder: (NSCoder *)coder
-{  
-    if (self = [super init])  
-    {  
+- (id) initWithCoder: (NSCoder *)coder {
+    if (self = [super init]) {
         self.appName = [coder decodeObjectForKey:@"appName"];
         self.appDisplayName = [coder decodeObjectForKey:@"appDisplayName"];  
         self.appBundleURL = [coder decodeObjectForKey:@"appBundleURL"];

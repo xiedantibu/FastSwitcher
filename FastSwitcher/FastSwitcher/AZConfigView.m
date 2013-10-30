@@ -40,25 +40,19 @@
         [((AZAppDelegate *)[NSApplication sharedApplication].delegate) listenEvents];
         
     } else  if ([keyPath isEqualToString:@"loginItemEnable"]) {
-        BOOL loginItemEnable = [[change objectForKey:@"new"] boolValue];
-        if (loginItemEnable) {
+        if ([[change objectForKey:@"new"] boolValue]) {
             [self addAppAsLoginItem];
         } else {
             [self removeAppFromLoginItem];
         }
         
     } else if ([keyPath isEqualToString:@"shownInStatusBar"]) {
-        BOOL show = [[change objectForKey:@"new"] boolValue];
         AZAppDelegate *delegate = ((AZAppDelegate *)[NSApplication sharedApplication]);
-        if (show) {
-            delegate.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-            [delegate.statusItem setMenu:delegate.statusMenu];
-            [delegate.statusItem setTitle:@"FS"];
-            [delegate.statusItem setHighlightMode:YES];
+        if ([[change objectForKey:@"new"] boolValue]) {
+            [delegate showStatusBar];
         } else {
-            [[NSStatusBar systemStatusBar] removeStatusItem:delegate.statusItem];
+            [delegate hideStatusBar];
         }
-        
     }
 }
 
@@ -123,4 +117,5 @@
 - (IBAction)exit:(id)sender {
     [NSApp terminate:self];
 }
+
 @end

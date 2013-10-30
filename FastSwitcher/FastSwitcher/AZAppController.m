@@ -16,12 +16,12 @@
 }
 
 - (void)showPreferencePanel:(id)sender {
-    [NSApp activateIgnoringOtherApps:YES];
+    [[NSRunningApplication currentApplication] activateWithOptions:(NSApplicationActivateAllWindows | NSApplicationActivateIgnoringOtherApps)];
     [[AZPrefsWindowController sharedPreferenceWindowController] showWindow:nil];
 }
 
 - (void)showAboutPanel:(id)sender {
-    [NSApp activateIgnoringOtherApps:YES];
+    [[NSRunningApplication currentApplication] activateWithOptions:(NSApplicationActivateAllWindows | NSApplicationActivateIgnoringOtherApps)];
     [[AZPrefsWindowController sharedPreferenceWindowController] loadViewForIdentifier:@"Updates"];
 }
 

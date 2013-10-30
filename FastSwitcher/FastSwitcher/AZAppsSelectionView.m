@@ -30,7 +30,7 @@
     [menu addItem:emptyMenuItem];
     // seperator
     [menu addItem:[NSMenuItem separatorItem]];
-    
+    // apps menuitem
     for (AZAppModel *app in self.appsList) {
         NSMenuItem *menuItem = [[NSMenuItem alloc] init];
         menuItem.title = app.appDisplayName;
@@ -40,50 +40,36 @@
         
         [menu addItem:menuItem];
     }
-    
+    // setup menu for each popUpBtn
     for (int i = 1000; i < 1010; i++) {
         NSPopUpButton *popUpBtn = [self viewWithTag:i];
         [popUpBtn removeAllItems];
         [popUpBtn setMenu:[menu copy]];
     }
-    
     // setup preference
     NSArray *selectedApps = [[AZResourceManager sharedInstance] readSelectedAppsList];
+    NSPopUpButton *popUpBtn = nil;
     AZAppModel *app = nil;
     id data = nil;
     for (NSInteger i = 0; i < selectedApps.count; i++) {
         if (i == 0) {
             data = [selectedApps lastObject];
             if ([data isEqualTo:[NSNull null]]) continue;
-            app = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            
-            NSPopUpButton *popUpBtn = [self viewWithTag:1000];
-            if ([((AZAppModel *)self.appsList[app.index]).appBundleURL isEqualTo:app.appBundleURL]) {
-                [popUpBtn selectItemAtIndex:app.index + 2];
-            } else {
-                for (NSInteger i = 0; i < self.appsList.count; i++) {
-                    AZAppModel *temp = self.appsList[i];
-                    if ([temp.appBundleURL isEqualTo:app.appBundleURL]) {
-                        [popUpBtn selectItemAtIndex:i + 2];
-                        break;
-                    }
-                }
-            }
+            popUpBtn = [self viewWithTag:1000];
         } else {
             data = selectedApps[i - 1];
             if ([data isEqualTo:[NSNull null]]) continue;
-            app = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            
-            NSPopUpButton *popUpBtn = [self viewWithTag:1000 + i];
-            if ([((AZAppModel *)self.appsList[app.index]).appBundleURL isEqualTo:app.appBundleURL]) {
-                [popUpBtn selectItemAtIndex:app.index + 2];
-            } else {
-                for (NSInteger i = 0; i < self.appsList.count; i++) {
-                    AZAppModel *temp = self.appsList[i];
-                    if ([temp.appBundleURL isEqualTo:app.appBundleURL]) {
-                        [popUpBtn selectItemAtIndex:i + 2];
-                        break;
-                    }
+            popUpBtn = [self viewWithTag:1000 + i];
+        }
+        app = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        if ([((AZAppModel *)self.appsList[app.index]).appBundleURL isEqualTo:app.appBundleURL]) {
+            [popUpBtn selectItemAtIndex:app.index + 2];
+        } else {
+            for (NSInteger j = 0; j < self.appsList.count; j++) {
+                AZAppModel *temp = self.appsList[j];
+                if ([temp.appBundleURL isEqualTo:app.appBundleURL]) {
+                    [popUpBtn selectItemAtIndex:j + 2];
+                    break;
                 }
             }
         }

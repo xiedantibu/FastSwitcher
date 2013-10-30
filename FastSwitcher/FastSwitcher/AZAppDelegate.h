@@ -25,5 +25,7 @@
 @property (nonatomic, strong) AZAppsSwitchWindow *window;
 
 - (void)listenEvents;
+- (void)showStatusBar;
+- (void)hideStatusBar;
 
 @end

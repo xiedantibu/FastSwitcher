@@ -16,6 +16,7 @@
 
 CGFloat const iconMargin = 30.0f;
 CGFloat const iconOriginY = 20.0f;
+CGFloat const iconDefaultSize = 100.0f;
 
 @interface AZAppsLaunchContentView : NSView
 
@@ -34,8 +35,8 @@ CGFloat const iconOriginY = 20.0f;
             if (![obj isEqualTo:[NSNull null]]) appsCount++;
         
         CGFloat originX = iconMargin;
-        CGFloat iconSize = 100;
-        if (frameRect.size.width < (appsCount * (100 + iconMargin) + iconMargin)) {
+        CGFloat iconSize = iconDefaultSize;
+        if (frameRect.size.width < (appsCount * (iconSize + iconMargin) + iconMargin)) {
             iconSize = (frameRect.size.width - iconMargin * (appsCount + 1)) / appsCount;
         }
         
@@ -74,8 +75,8 @@ CGFloat const iconOriginY = 20.0f;
 
 - (NSRect)calculateRect:(NSInteger)appsCount {
     NSRect screenRect = [self getScreenResolution];
-    CGFloat iconSize = 100;
-    if (screenRect.size.width < (appsCount * (100 + iconMargin) + iconMargin)) {
+    CGFloat iconSize = iconDefaultSize;
+    if (screenRect.size.width < (appsCount * (iconSize + iconMargin) + iconMargin)) {
         iconSize = (screenRect.size.width - iconMargin * (appsCount + 1)) / appsCount;
     }
     NSRect rect = (NSRect){
@@ -90,8 +91,10 @@ CGFloat const iconOriginY = 20.0f;
 - (id)init {
     self.apps = [[AZResourceManager sharedInstance] readSelectedAppsList];
     selectedAppsCount = 0;
+    
     for (id obj in self.apps)
-        if (![obj isEqualTo:[NSNull null]]) selectedAppsCount++;
+        if (![obj isEqualTo:[NSNull null]]) 
+            selectedAppsCount++;
     
     NSRect rect = [self calculateRect:selectedAppsCount];
     
@@ -119,8 +122,10 @@ CGFloat const iconOriginY = 20.0f;
 - (void)refresh {
     self.apps = [[AZResourceManager sharedInstance] readSelectedAppsList];
     selectedAppsCount = 0;
+    
     for (id obj in self.apps)
-        if (![obj isEqualTo:[NSNull null]]) selectedAppsCount++;
+        if (![obj isEqualTo:[NSNull null]]) 
+            selectedAppsCount++;
     
     NSRect rect = [self calculateRect:selectedAppsCount];
     [self setFrame:rect display:YES animate:YES];

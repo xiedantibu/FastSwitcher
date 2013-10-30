@@ -123,6 +123,9 @@ OSStatus hotKeyHandler(EventHandlerCallRef nextHandler, EventRef anEvent, void *
     } else {
         pathUrl = [NSString stringWithFormat:@"/Applications/%@", app.appName];
     }
+    
+    
+    
     [[NSWorkspace sharedWorkspace] launchApplication:pathUrl];
     return noErr;
 }

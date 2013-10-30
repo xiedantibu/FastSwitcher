@@ -61,8 +61,6 @@
     NSArray *appsArray = [[AZResourceManager sharedInstance] readSelectedAppsList];
     [[AZHotKeyManager sharedInstance] registerHotKey:appsArray];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showStatusBar) name:@"SHOW_STATUS_BAR" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideStatusBar) name:@"HIDE_STATUS_BAR" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshWindow) name:@"REFRESH_WINDOW" object:nil];
 }
 
@@ -73,15 +71,17 @@
     isFirstActive = NO;
 }
 
+#pragma mark - StatusBar
+
 - (void)showStatusBar {
-    statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    [statusItem setMenu:self.statusMenu];
-    [statusItem setTitle:@"FS"];
-    [statusItem setHighlightMode:YES];
+    self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    [self.statusItem setMenu:self.statusMenu];
+    [self.statusItem setTitle:@"FS"];
+    [self.statusItem setHighlightMode:YES];
 }
 
 - (void)hideStatusBar {
-    [[NSStatusBar systemStatusBar] removeStatusItem:statusItem];
+    [[NSStatusBar systemStatusBar] removeStatusItem:self.statusItem];
 }
 
 #pragma mark - Handle events
@@ -212,8 +212,7 @@
 }
 
 - (void)refreshWindow {
-    self.window = nil;
-    self.window = [[AZAppsSwitchWindow alloc] init];
+    [self.window refresh];
 }
 
 - (void)switcherViewFadeIn {

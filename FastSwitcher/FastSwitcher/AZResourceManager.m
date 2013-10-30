@@ -187,34 +187,33 @@ id AZRez;
     return folder;
 }
 
+NSString *selectedAppsFileName = @"appsData";
 // 保存已选应用
 - (void)saveSelectedApps:(NSArray *)apps {
     NSData *data =[NSKeyedArchiver archivedDataWithRootObject:apps];
     NSString *documentsPath = [self documentPath];
-    NSString *fileInDocuments = [documentsPath stringByAppendingPathComponent:@"appsData"];
-    BOOL success = [data writeToFile:fileInDocuments atomically:YES];
-    if (!success) {
-        NSLog(@"damn");
-    }
-    NSLog(@"succe");
+    NSString *fileInDocuments = [documentsPath stringByAppendingPathComponent:selectedAppsFileName];
+    [data writeToFile:fileInDocuments atomically:YES];
 }
 // 读取已选应用
 - (NSArray *)readSelectedAppsList {
     NSString *documentsPath = [self documentPath];
-    NSString *fileInDocuments = [documentsPath stringByAppendingPathComponent:@"appsData"];
+    NSString *fileInDocuments = [documentsPath stringByAppendingPathComponent:selectedAppsFileName];
     return [NSKeyedUnarchiver unarchiveObjectWithData:[NSData dataWithContentsOfFile:fileInDocuments]];
 }
+
+NSString *cacheAppsFileName = @"CacheApps";
 // 缓存全部应用信息
 - (void)cacheAllApps:(NSArray *)apps {
     NSData *data =[NSKeyedArchiver archivedDataWithRootObject:apps];
     NSString *documentsPath = [self documentPath];
-    NSString *fileInDocuments = [documentsPath stringByAppendingPathComponent:@"CacheApps"];
+    NSString *fileInDocuments = [documentsPath stringByAppendingPathComponent:cacheAppsFileName];
     [data writeToFile:fileInDocuments atomically:YES];
 }
 // 读取全部应用信息
 - (NSArray *)readCachedApps {
     NSString *documentsPath = [self documentPath];
-    NSString *fileInDocuments = [documentsPath stringByAppendingPathComponent:@"CacheApps"];
+    NSString *fileInDocuments = [documentsPath stringByAppendingPathComponent:cacheAppsFileName];
     return [NSKeyedUnarchiver unarchiveObjectWithData:[NSData dataWithContentsOfFile:fileInDocuments]];
 }
 

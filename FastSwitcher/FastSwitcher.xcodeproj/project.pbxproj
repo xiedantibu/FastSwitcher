@@ -570,7 +570,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/apple/Desktop/百度云同步盘/Code/FastSwitcher/FastSwitcher",
-					"/Users/apple/Desktop/百度云同步盘/Code/FastSwitcher/FastSwitcher/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FastSwitcher/FastSwitcher-Prefix.pch";
@@ -589,7 +588,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/apple/Desktop/百度云同步盘/Code/FastSwitcher/FastSwitcher",
-					"/Users/apple/Desktop/百度云同步盘/Code/FastSwitcher/FastSwitcher/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FastSwitcher/FastSwitcher-Prefix.pch";
