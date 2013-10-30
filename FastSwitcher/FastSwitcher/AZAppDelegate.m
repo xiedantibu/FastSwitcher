@@ -11,6 +11,7 @@
 #import "AZResourceManager.h"
 #import "AZAppController.h"
 
+
 @implementation AZAppDelegate
 
 /*
@@ -99,6 +100,9 @@
         [NSEvent removeMonitor:self.localMonitor];
     }
     
+    NSTimeInterval intervalAnewHotKey = 1;
+    NSTimeInterval intervalCheckHotKeyEnable = 0.3;
+    
     // Global monitor
     self.globalMonitor = 
     [NSEvent addGlobalMonitorForEventsMatchingMask:NSFlagsChangedMask | NSKeyDownMask handler: ^(NSEvent *event) {
@@ -115,11 +119,12 @@
                 self.enableHotKey = NO;
                 [self.timerDelay invalidate];
                 [self.timerDisabelHotKey invalidate];
-                [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(anewHotKeyEnable) userInfo:Nil repeats:NO];
+                [[AZHotKeyManager sharedInstance] unregisterHotKey];
+                [NSTimer scheduledTimerWithTimeInterval:intervalAnewHotKey target:self selector:@selector(anewHotKeyEnable) userInfo:Nil repeats:NO];
                 return;
             }
             hasTapped = YES;
-            self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(checkHotKeyEnable) userInfo:nil repeats:NO];
+            self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:intervalCheckHotKeyEnable target:self selector:@selector(checkHotKeyEnable) userInfo:nil repeats:NO];
 
             if (self.window == nil) {
                 self.window  = [[AZAppsSwitchWindow alloc] init];
@@ -149,8 +154,10 @@
                 hasTapped = NO;
                 self.enableHotKey = NO;
                 [self.timerDelay invalidate];
+                [[AZHotKeyManager sharedInstance] unregisterHotKey];
                 [self.timerDisabelHotKey invalidate];
-                [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(anewHotKeyEnable) userInfo:Nil repeats:NO];
+                self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:intervalCheckHotKeyEnable target:self selector:@selector(checkHotKeyEnable) userInfo:nil repeats:NO];
+                
                 return event;
             }
             hasTapped = YES;
@@ -217,6 +224,7 @@
 }
 
 - (void)anewHotKeyEnable {
+    [[AZHotKeyManager sharedInstance] registerHotKey];
     self.enableHotKey = YES;
 }
 

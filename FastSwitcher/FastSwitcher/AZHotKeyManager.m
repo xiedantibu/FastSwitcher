@@ -47,7 +47,6 @@ OSStatus hotKeyHandler(EventHandlerCallRef nextHandler, EventRef anEvent, void *
 - (void)registerHotKey:(NSArray *)apps {
     [self unregisterHotKey];
     
-    EventHotKeyRef  hotKeyRef;
     EventHotKeyID   hotKeyID;
     EventTypeSpec   eventType;
     
@@ -55,7 +54,7 @@ OSStatus hotKeyHandler(EventHandlerCallRef nextHandler, EventRef anEvent, void *
     int keyCodes[] = {18, 19, 20, 21, 23, 22, 26, 28, 25, 29};
     
     EventModifiers modifyKey = 0;
-    NSInteger   modifyKeyIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"modifyKey"];
+    NSInteger modifyKeyIndex = [[NSUserDefaults standardUserDefaults] integerForKey:@"modifyKey"];
     switch (modifyKeyIndex) {
         case 0:
             modifyKey = cmdKey;
@@ -80,9 +79,10 @@ OSStatus hotKeyHandler(EventHandlerCallRef nextHandler, EventRef anEvent, void *
         hotKeyID.signature = (OSType)[[NSString stringWithFormat:@"app%u", i] UTF8String];
         hotKeyID.id = i;
         
+        EventHotKeyRef  hotKeyRef;
         RegisterEventHotKey(keyCodes[i], modifyKey, hotKeyID, GetApplicationEventTarget(), 0, &hotKeyRef);
         if (hotKeyRef != nil) {
-            NSData *data = [NSData dataWithBytes:hotKeyRef length:sizeof(EventHotKeyRef)];
+            NSData *data = [NSData dataWithBytes:&hotKeyRef length:sizeof(EventHotKeyRef)];
             [array addObject:data];
         }
     }
@@ -97,10 +97,9 @@ OSStatus hotKeyHandler(EventHandlerCallRef nextHandler, EventRef anEvent, void *
 }
 
 - (void)unregisterHotKey {
-    EventHotKeyRef  myHotKeyRef;
-    
     NSArray *hotKeyRefs = [[NSUserDefaults standardUserDefaults] objectForKey:@"HOT_KEY"];    
     for (NSData *value in hotKeyRefs) {
+        EventHotKeyRef  myHotKeyRef;
         [value getBytes:&myHotKeyRef length:sizeof(EventHotKeyRef)];
         UnregisterEventHotKey(myHotKeyRef);
     }
