@@ -11,7 +11,6 @@
 #import "AZResourceManager.h"
 #import "AZAppController.h"
 
-
 @implementation AZAppDelegate
 
 /*
@@ -76,7 +75,7 @@
 - (void)showStatusBar {
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     [self.statusItem setMenu:self.statusMenu];
-    [self.statusItem setTitle:@"FS"];
+    [self.statusItem setImage:[NSImage imageNamed:@"icon_20x20"]];
     [self.statusItem setHighlightMode:YES];
 }
 
@@ -102,13 +101,13 @@
     NSTimeInterval intervalAnewHotKey = 1;
     NSTimeInterval intervalCheckHotKeyEnable = 0.3;
     
-    // Global monitor
+    /* Global monitor
+     * OS X 10.9
+     * need to "drag-and-drop" your application from the Application folder to the new Accessibility menu
+     */
     self.globalMonitor = 
     [NSEvent addGlobalMonitorForEventsMatchingMask:NSFlagsChangedMask | NSKeyDownMask handler: ^(NSEvent *event) {
-        BOOL shownSwitcherView = [[NSUserDefaults standardUserDefaults] boolForKey:@"shownSwitcherView"];
-        
         NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
-
         if(flags == modifyKey && !self.window.isFadingOut && !isTapping){
             isTapping = YES;
             
@@ -121,10 +120,12 @@
                 [[AZHotKeyManager sharedInstance] unregisterHotKey];
                 [NSTimer scheduledTimerWithTimeInterval:intervalAnewHotKey target:self selector:@selector(anewHotKeyEnable) userInfo:Nil repeats:NO];
                 return;
-            }
+            }           
+            
             hasTapped = YES;
             self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:intervalCheckHotKeyEnable target:self selector:@selector(checkHotKeyEnable) userInfo:nil repeats:NO];
-
+            
+            BOOL shownSwitcherView = [[NSUserDefaults standardUserDefaults] boolForKey:@"shownSwitcherView"];
             if (!shownSwitcherView) return;
             
             if (self.window == nil) {
@@ -135,19 +136,34 @@
                                                              selector:@selector(switcherViewFadeIn) 
                                                              userInfo:nil 
                                                               repeats:NO];
-        } else {
-            if ([self.timerDelay isValid]) [self.timerDelay invalidate];
-            if (isTapping) [self.window fadeOut];
-            isTapping = NO;
+            return;
         }
+        
+        if ([self.timerDelay isValid]) [self.timerDelay invalidate];
+        if (isTapping) [self.window fadeOut];
+        isTapping = NO;
     }];
     
-    self.localMonitor = 
-    [NSEvent addLocalMonitorForEventsMatchingMask:NSFlagsChangedMask | NSKeyDownMask handler:^(NSEvent *event) {
-        BOOL shownSwitcherView = [[NSUserDefaults standardUserDefaults] boolForKey:@"shownSwitcherView"];
-        
+    // 全局
+    [NSEvent addGlobalMonitorForEventsMatchingMask:NSFlagsChangedMask handler:^(NSEvent *event){
         NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
+        if (flags == NSCommandKeyMask) {
+            // handle it
+        }
+    }];
+    // 本地
+    [NSEvent addLocalMonitorForEventsMatchingMask:NSFlagsChangedMask handler:^(NSEvent *event){
+        NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
+        if (flags == NSCommandKeyMask) {
+            // handle it
+        }
+        return event;
+    }];
 
+    self.localMonitor = 
+    [NSEvent addLocalMonitorForEventsMatchingMask:NSFlagsChangedMask + NSKeyDownMask handler:^(NSEvent *event) {
+        NSUInteger flags = [event modifierFlags] & NSDeviceIndependentModifierFlagsMask;
+    
         if(flags == modifyKey && !self.window.isFadingOut && !isTapping){
             isTapping = YES;
             // check hot key enable
@@ -164,6 +180,7 @@
             hasTapped = YES;
             self.timerDisabelHotKey = [NSTimer scheduledTimerWithTimeInterval:intervalCheckHotKeyEnable target:self selector:@selector(checkHotKeyEnable) userInfo:nil repeats:NO];
             
+            BOOL shownSwitcherView = [[NSUserDefaults standardUserDefaults] boolForKey:@"shownSwitcherView"];
             if (!shownSwitcherView) return event;
             
             if (self.window == nil) {

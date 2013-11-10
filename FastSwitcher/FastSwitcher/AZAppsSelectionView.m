@@ -34,7 +34,8 @@
     for (AZAppModel *app in self.appsList) {
         NSMenuItem *menuItem = [[NSMenuItem alloc] init];
         menuItem.title = app.appDisplayName;
-        NSImage *image = [AZResourceManager imageNamed:app.appIconPath inBundle:[NSBundle bundleWithURL:app.appBundleURL]];
+        NSImage *image = [AZResourceManager imageNamed:app.appIconPath 
+                                              inBundle:[NSBundle bundleWithURL:app.appBundleURL]];
         [image setSize:NSMakeSize(16, 16)];
         menuItem.image = image;
         

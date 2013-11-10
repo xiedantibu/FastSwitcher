@@ -13,7 +13,7 @@
 
 - (void)awakeFromNib {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPreferencePanel:) name:@"SHOW_PREFERENCE_VIEW" object:nil];
-}
+} 
 
 - (void)showPreferencePanel:(id)sender {
     [[NSRunningApplication currentApplication] activateWithOptions:(NSApplicationActivateAllWindows | NSApplicationActivateIgnoringOtherApps)];

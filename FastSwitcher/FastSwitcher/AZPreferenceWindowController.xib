@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1080" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AZPrefsWindowController">
@@ -433,7 +433,7 @@
                     </connections>
                 </button>
                 <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HLa-zN-5Fv">
-                    <rect key="frame" x="114" y="66" width="176" height="25"/>
+                    <rect key="frame" x="114" y="66" width="176" height="27"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="0.44444444444444442" tickMarkPosition="below" numberOfTickMarks="10" allowsTickMarkValuesOnly="YES" sliderType="linear" id="W8i-gE-WWc"/>
                     <connections>
@@ -447,7 +447,7 @@
                 <outlet property="shownSwitcherViewCheckBox" destination="MdR-Lc-M0T" id="FAH-S9-Btr"/>
             </connections>
         </customView>
-        <customView id="TBI-Qb-0nD" customClass="AZAboutView">
+        <customView focusRingType="none" appearanceType="aqua" id="TBI-Qb-0nD" customClass="AZAboutView">
             <rect key="frame" x="0.0" y="0.0" width="320" height="270"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
@@ -461,7 +461,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ska-Hv-U1u">
-                    <rect key="frame" x="104" y="130" width="112" height="17"/>
+                    <rect key="frame" x="104" y="111" width="112" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Fast Switcher" id="bD1-zz-HBf">
                         <font key="font" metaFont="system"/>
@@ -469,8 +469,16 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <imageView appearanceType="aqua" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UoF-FT-lN7">
+                    <rect key="frame" x="128" y="155" width="64" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon_512x512" id="BpZ-e8-k5S"/>
+                </imageView>
             </subviews>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="qqW-1X-lB0" userLabel="Shared Defaults"/>
     </objects>
+    <resources>
+        <image name="icon_512x512" width="512" height="512"/>
+    </resources>
 </document>

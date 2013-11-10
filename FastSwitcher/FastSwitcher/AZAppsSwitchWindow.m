@@ -182,7 +182,7 @@ CGFloat const iconDefaultSize = 100.0f;
     NSUInteger screenCount = screenArray.count;
     
     for (NSUInteger index = 0; index < screenCount; index++) {
-        NSScreen *screen = [screenArray objectAtIndex: index];
+        NSScreen *screen = screenArray[index];
         NSRect screenRect = [screen visibleFrame];
         if (mainScreen == screen) return screenRect;
     }

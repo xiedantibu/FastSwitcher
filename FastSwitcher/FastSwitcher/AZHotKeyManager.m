@@ -47,7 +47,7 @@ OSStatus hotKeyHandler(EventHandlerCallRef nextHandler, EventRef anEvent, void *
 - (void)registerHotKey:(NSArray *)apps {
     [self unregisterHotKey];
     
-    EventHotKeyID   hotKeyID;
+    EventHotKeyID   hotKeyID;       // 
     EventTypeSpec   eventType;
     
     NSMutableArray *array = [NSMutableArray array];
